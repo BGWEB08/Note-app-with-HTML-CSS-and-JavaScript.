@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const container = document.createElement("div");
+    container.classList.add("container");
+    document.body.appendChild(container);
+
     const addBox = document.createElement("li");
     addBox.classList.add("add-box");
     addBox.innerHTML = `
         <div class="icon"><i class="fa-solid fa-plus"></i></div>
         <p>Add new note</p>
     `;
-    document.querySelector(".container").appendChild(addBox);
+    container.appendChild(addBox);
 
     const popupContainer = document.createElement("div");
     popupContainer.classList.add("popup-container");
@@ -55,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function showNotes(){
-        const container = document.querySelector(".container");
         container.innerHTML = ""; // Önceki notları temizle
         notes.forEach((note,index) => {
             let liTag = `
