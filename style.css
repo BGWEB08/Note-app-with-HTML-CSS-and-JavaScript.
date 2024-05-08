@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin:0;
+    padding: 0;
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background: #C3A9FF;
+}
+
+.container {
+    margin: 50px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+.container li {
+    height: 250px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px 20px 20px;
+    list-style: none;
+}
+
+.add-box {
+    cursor: pointer;
+}
+
+.add-box,
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.add-box .icon {
+    height: 80px;
+    width: 80px;
+    color: #C3A9FF;
+    border: 2px dashed #C3A9FF;
+    border-radius: 50%;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.add-box p {
+    color: #C3A9FF;
+    font-weight: 500;
+}
+
+.note {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.note p {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.note span {
+    display: block;
+    margin-top: 5px;
+    color: #272829;
+    font-size: 15px;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #080a0c;
+}
+
+.footer span {
+    color: #080a0c;
+    font-size: 12px;
+}
+
+.footer .settings {
+    color: #080a0c;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.settings {
+    position: relative;
+}
+
+.menu {
+    position: absolute;
+    padding: 5px 0;
+    bottom: 0;
+    right: -5px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+    transform: scale(0);
+    transition: transform 0.2s ease;
+    transform-origin:bottom right;
+}
+
+.settings.show .menu {
+    transform: scale(1);
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #080a0c;
+    height: 25px;
+    border-radius: 0;
+    padding: 18px 15px;
+    cursor: pointer;
+}
+
+.menu li:hover {
+    background: #F0F0F0;
+}
+
+.menu li i {
+    padding-right: 6px;
+}
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background: rgba(0,0,0,0.4);
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    z-index: 3;
+}
+
+.popup .content {
+    background: #fff;
+    border-radius: 5px;
+}
+
+.popup-container,
+.popup {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.popup-container.show,
+.popup-container.show .popup {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup .content header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.content header p {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.content header i {
+    font-size: 15px;
+    color: #080a0c;
+    cursor: pointer;
+}
+
+.content form {
+    margin: 15px 25px 35px;
+}
+
+.content form .row {
+    margin-bottom: 20px;
+}
+
+form .row label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.content form input,
+.content form textarea {
+    width: 100%;
+    height: 50px;
+    outline: none;
+    border: 1px solid #080a0c;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 0 12px;
+}
+
+.content form textarea {
+    width: 100% !important;
+    height: 150px !important;
+    resize: none;
+    padding: 10px 12px;
+}
+
+.content form button {
+    width: 100%;
+    height: 40px;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    background: #8463d2;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.content form button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .popup {
+        width: 90%; 
+        max-width: none;
+    }
+
+    .popup .content header {
+        padding: 10px;
+    }
+
+    .content form {
+        margin: 10px 15px 30px;
+    }
+
+    .content form input,
+    .content form textarea {
+        height: 40px;
+        font-size: 13px;
+        padding: 0 10px;
+    }
+
+    .content form textarea {
+        height: 120px;
+        padding: 8px 10px;
+    }
+
+    .content form button {
+        height: 35px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
