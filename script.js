@@ -1,4 +1,3 @@
-// script.js
 document.addEventListener("DOMContentLoaded", function () {
     const addBox = document.querySelector(".add-box");
     const popupContainer = document.querySelector(".popup-container");
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showNotes(){
         const container = document.querySelector(".container");
-        container.innerHTML = ""; // Clear previous notes
+        container.innerHTML = ""; // Önceki notları temizle
         notes.forEach((note,index) => {
             let liTag = `
                 <li class="note">
@@ -59,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function deleteNote(noteIndex){
-        let confirmDelete = confirm("Do you really want to delete this note?");
+        let confirmDelete = confirm("Bu notu gerçekten silmek istiyor musunuz?");
         if(!confirmDelete) return;
         
         notes.splice(noteIndex,1);
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title.value = tit;
         description.value = desc;
         addBtn.innerText = "Update Note";
-        popupContainer.classList.add("show"); // Show the popup to edit
+        popupContainer.classList.add("show"); // Düzenleme formunu açmak için pop-up'u göster
     }
 
     addBtn.addEventListener("click",e => {
@@ -106,5 +105,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    showNotes(); // Show notes when the page loads
+    showNotes(); // Sayfa yüklendiğinde notları göster
 });
