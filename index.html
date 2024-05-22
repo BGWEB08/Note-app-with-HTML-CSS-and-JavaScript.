@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">  
     <title>Note App</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-    <div class="popup-container">
-        <div class="popup">
-            <div class="content">
-                <header>
-                    <p>Add a new note</p>
-                    <i class="fa-solid fa-xmark"></i>
-                </header>
-                <form action="#">
-                    <div class="row title">
-                        <label>Title</label>
-                        <input type="text">
-                    </div>
-                    <div class="row description">
-                        <label>Description</label>
-                        <textarea></textarea>
-                    </div>
-                    <button>Add Note</button>
-                </form>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  </head>
+  <body>
+    <div class="popup-box">
+      <div class="popup">
+        <div class="content">
+          <header>
+            <p></p>
+            <i class="uil uil-times"></i>
+          </header>
+          <form action="#">
+            <div class="row title">
+              <label>Title</label>
+              <input type="text" spellcheck="false">
             </div>
+            <div class="row description">
+              <label>Description</label>
+              <textarea spellcheck="false"></textarea>
+            </div>
+            <button></button>
+          </form>
         </div>
-
+      </div>
     </div>
-    <div class="container">
-        <li class="add-box">
-            <div class="icon"><i class="fa-solid fa-plus"></i></div>
-            <p>Add new note</p>
-        </li>
+    <div class="wrapper">
+      <li class="add-box">
+        <div class="icon"><i class="uil uil-plus"></i></div>
+        <p>Add new note</p>
+      </li>
     </div>
-
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
