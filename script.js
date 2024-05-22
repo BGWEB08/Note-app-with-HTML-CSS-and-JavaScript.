@@ -1,106 +1,105 @@
-const addBox = document.querySelector(".add-box");
-const popupContainer = document.querySelector(".popup-container");
-const closeIcon = document.querySelector("header i");
-const addBtn = document.querySelector(".content button");
-const title = document.querySelector("input");
-const description = document.querySelector("textarea");
-const titleNote = document.querySelector("header p")
+const addBox = document.querySelector(".add-box"),
+popupBox = document.querySelector(".popup-box"),
+popupTitle = popupBox.querySelector("header p"),
+closeIcon = popupBox.querySelector("header i"),
+titleTag = popupBox.querySelector("input"),
+descTag = popupBox.querySelector("textarea"),
+addBtn = popupBox.querySelector("button");
 
-const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const months = ["January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December"];
 const notes = JSON.parse(localStorage.getItem("notes") || "[]");
 let isUpdate = false, updateId;
 
-addBox.addEventListener("click",() => {
-    title.focus();
-    popupContainer.classList.add("show");
-})
-
-closeIcon.addEventListener("click",() => {
-    isUpdate = false;
-    title.value = "";
-    description.value = "";
+addBox.addEventListener("click", () => {
+    popupTitle.innerText = "Add a new Note";
     addBtn.innerText = "Add Note";
-    titleNote.innerText = "Add a new Note";
-    popupContainer.classList.remove("show");
-})
+    popupBox.classList.add("show");
+    document.querySelector("body").style.overflow = "hidden";
+    if(window.innerWidth > 660) titleTag.focus();
+});
 
-function showNotes(){
-    notes.forEach((note,index) => {
-        let liTag = `
-            <li class="note">
-            <div class="main">
-                <p>${note.title}</p>
-                <span>${note.description}</span>
-            </div>
-            <div class="footer">
-                <span>${note.date}</span>
-                <div class="settings">
-                    <i onClick="showMenu(this)" class="fa-solid fa-ellipsis"></i>
-                    <ul class="menu">
-                        <li onClick="updateNote(${index},'${note.title}','${note.description}')"><i class="fa-regular fa-pen-to-square"></i>Edit</li>
-                        <li onClick="deleteNote(${index})"><i class="fa-regular fa-trash-can"></i>Delete</li>
-                    </ul>
-                </div>
-            </div>
-        </li>`
-        addBox.insertAdjacentHTML("afterend",liTag)
-    })
+closeIcon.addEventListener("click", () => {
+    isUpdate = false;
+    titleTag.value = descTag.value = "";
+    popupBox.classList.remove("show");
+    document.querySelector("body").style.overflow = "auto";
+});
+
+function showNotes() {
+    if(!notes) return;
+    document.querySelectorAll(".note").forEach(li => li.remove());
+    notes.forEach((note, id) => {
+        let filterDesc = note.description.replaceAll("\n", '<br/>');
+        let liTag = `<li class="note">
+                        <div class="details">
+                            <p>${note.title}</p>
+                            <span>${filterDesc}</span>
+                        </div>
+                        <div class="bottom-content">
+                            <span>${note.date}</span>
+                            <div class="settings">
+                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+                                <ul class="menu">
+                                    <li onclick="updateNote(${id}, '${note.title}', '${filterDesc}')"><i class="uil uil-pen"></i>Edit</li>
+                                    <li onclick="deleteNote(${id})"><i class="uil uil-trash"></i>Delete</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>`;
+        addBox.insertAdjacentHTML("afterend", liTag);
+    });
 }
+showNotes();
 
-function showMenu(elem){
+function showMenu(elem) {
     elem.parentElement.classList.add("show");
-    document.addEventListener("click",e => {
-        if(e.target.tagName != "I" || e.target != elem){
+    document.addEventListener("click", e => {
+        if(e.target.tagName != "I" || e.target != elem) {
             elem.parentElement.classList.remove("show");
         }
-    })
+    });
 }
 
-function deleteNote(noteIndex){
-    let confirmDelete = confirm("Do you really want to delete this note?");
-    if(!confirmDelete) return;
-    
-    notes.splice(noteIndex,1);
-
-    localStorage.setItem("notes",JSON.stringify(notes));
+function deleteNote(noteId) {
+    let confirmDel = confirm("Are you sure you want to delete this note?");
+    if(!confirmDel) return;
+    notes.splice(noteId, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
     showNotes();
 }
 
-function updateNote(noteIndex,tit,desc){
+function updateNote(noteId, title, filterDesc) {
+    let description = filterDesc.replaceAll('<br/>', '\r\n');
+    updateId = noteId;
     isUpdate = true;
-    updateId = noteIndex;
     addBox.click();
-    title.value = tit;
-    description.value = desc;
+    titleTag.value = title;
+    descTag.value = description;
+    popupTitle.innerText = "Update a Note";
     addBtn.innerText = "Update Note";
-    titleNote.innerText = "Update a Note";
 }
 
-addBtn.addEventListener("click",e => {
+addBtn.addEventListener("click", e => {
     e.preventDefault();
-    let noteTitle = title.value;
-    noteDescription = description.value;
+    let title = titleTag.value.trim(),
+    description = descTag.value.trim();
 
-    if(noteTitle || noteDescription){
-        let dateObj = new Date();
-        month = months[dateObj.getMonth()];
-        day = dateObj.getDay();
-        year = dateObj.getFullYear();
+    if(title || description) {
+        let currentDate = new Date(),
+        month = months[currentDate.getMonth()],
+        day = currentDate.getDate(),
+        year = currentDate.getFullYear();
 
-        let noteInfo = {
-            title: noteTitle,
-            description: noteDescription,
-            date: `${month} ${day} ${year}`
-        }
-        if(!isUpdate){
-            notes.push(noteInfo)
+        let noteInfo = {title, description, date: `${month} ${day}, ${year}`}
+        if(!isUpdate) {
+            notes.push(noteInfo);
         } else {
             isUpdate = false;
             notes[updateId] = noteInfo;
         }
-       
-        closeIcon.click();
+        localStorage.setItem("notes", JSON.stringify(notes));
         showNotes();
+        closeIcon.click();
     }
-
-})
+});
